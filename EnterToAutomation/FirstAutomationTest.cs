@@ -8,13 +8,12 @@ using OpenQA.Selenium.Chrome;
 namespace EnterToTestAutomation
 {
     [TestFixture]
-    public class FirstAutomationTest
+    
+    public class FirstAutomationTest : BaseTest
     {
-        private IWebDriver driver;
         [Test]
         public void EnterToShopPage_AddProductToCartAndClickOnTrash_CartShouldBeEmpty()
         {
-            driver = new ChromeDriver(Directory.GetCurrentDirectory());
             driver.Navigate().GoToUrl("http://automationpractice.com/index.php");
             driver.FindElements(By.CssSelector(".menu-content a")).FirstOrDefault(x => x.Text == "DRESSES")?.Click();
             driver.WaitForClickable(By.CssSelector(".right-block h5 a"));
@@ -28,8 +27,6 @@ namespace EnterToTestAutomation
             driver.Wait().Until(x => driver.FindElement(By.CssSelector(".alert-warning")).Text != "");
             var emptyCartText = driver.FindElement(By.CssSelector(".alert-warning")).Text;
             Assert.AreEqual(emptyCartText, "Your shopping cart is empty.");
-            driver.Close();
-            driver.Quit();
         }
     }
 }
